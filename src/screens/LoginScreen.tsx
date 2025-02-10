@@ -27,8 +27,8 @@ const LoginScreen: React.FC = () => {
   const handleLogout = () => {
     setToken(null);
     setLoggedIn(false);
-    setUsername('');
-    setPassword('');
+    //setUsername('');
+    //setPassword('');
   };
 
   if (!loggedIn) {
