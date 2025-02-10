@@ -24,10 +24,16 @@ const CustomerListScreen: React.FC<{ token: string | null; onLogout: () => void 
     try {
       const response = await getCustomers(token);
       if(response.status === 200){
-        setCustomers(response.data.customers);
+        const uniqueCustomers = response.data.customers.filter(
+          (customer: Customer, index: number, self: Customer[]) =>
+            index === self.findIndex((c) => c.CUSTOMER_ID === customer.CUSTOMER_ID)
+        );
+        //const uniqueCustomers = Array.from(new Map(response.data.customers.map((customer: Customer) => [customer.CUSTOMER_ID.toString(), customer])).values());
+        setCustomers(uniqueCustomers);
       }
     } catch (error) {
       Alert.alert('Error fetching customers');
+      Alert.alert(error.toString());
     } finally {
       setLoading(false);
     }
