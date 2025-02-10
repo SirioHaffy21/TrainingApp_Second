@@ -27,7 +27,7 @@ const CustomerListScreen: React.FC<{ token: string | null; onLogout: () => void 
         setCustomers(response.data.customers);
       }
     } catch (error) {
-      Alert.alert('Error fetching customers:', error);
+      Alert.alert('Error fetching customers');
     } finally {
       setLoading(false);
     }

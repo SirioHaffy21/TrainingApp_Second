@@ -20,8 +20,7 @@ const LoginScreen: React.FC = () => {
         Alert.alert('Login Failed', 'Invalid credentials');
       }
     } catch (error) {
-      //Alert.alert('Login failed -2', 'Invalid credentials');
-      Alert.alert('Login failed -3', error.toString());
+      Alert.alert('Login failed', 'Invalid credentials');
     }
   };
 
