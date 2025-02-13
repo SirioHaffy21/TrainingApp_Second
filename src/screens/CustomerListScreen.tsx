@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, Button, ActivityIndicator, Alert } from 'react-native';
 import { getCustomers } from '../api/customer';
+import { TextInput } from 'react-native-gesture-handler';
 
 interface Customer {
   CUSTOMER_ID: number;
@@ -10,11 +11,15 @@ interface Customer {
   CUSTOMER_NAME: string;
 }
 
-const CustomerListScreen: React.FC<{ token: string | null; onLogout: () => void }> = ({ token, onLogout }) => {
+const CustomerListScreen: React.FC<{ token: string | null; deviceToken: string | null; onLogout: () => void }> = ({ token, deviceToken, onLogout }) => {
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(true);
+  const [device_Token, setDeviceToken] = useState<string | null>(null);
 
   useEffect(() => {
+    if (deviceToken) {
+      setDeviceToken(deviceToken);
+    }
     if (token) {
       fetchCustomers();
     }
@@ -49,6 +54,7 @@ const CustomerListScreen: React.FC<{ token: string | null; onLogout: () => void 
       <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 16 }}>
         Customer List
       </Text>
+      <TextInput value={deviceToken} onChangeText={setDeviceToken} style={{ padding: 8, borderWidth: 8, marginBottom: 8 }}/>
       <FlatList
         data={customers}
         keyExtractor={(item) => item.CUSTOMER_ID.toString()}
@@ -60,6 +66,7 @@ const CustomerListScreen: React.FC<{ token: string | null; onLogout: () => void 
         )}
       />
       <Button onPress={fetchCustomers} title="Refresh">Refresh</Button>
+      
     </View>
   );
 };
