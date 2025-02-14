@@ -47,7 +47,7 @@ const CustomerListScreen: React.FC<{ token: string | null; deviceToken: string |
   }
 
   return (
-    <View style={{ padding: 16 }}>
+    <View style={styles.container}>
       <Button title="Log out" onPress={onLogout} />
       <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 16 }}>
         Customer List
@@ -55,6 +55,7 @@ const CustomerListScreen: React.FC<{ token: string | null; deviceToken: string |
       <TextInput value={deviceToken} multiline
         numberOfLines={8} onChangeText={setDeviceToken} style={{ padding: 4, borderWidth: 4, marginBottom: 1 }}/>
       <FlatList
+        style={styles.list}
         data={customers}
         keyExtractor={(item) => item.CUSTOMER_ID.toString()}
         renderItem={({ item }) => (
