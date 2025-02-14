@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Button, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, FlatList, Button, ActivityIndicator, Alert, StyleSheet } from 'react-native';
 import { getCustomers } from '../api/customer';
 import { TextInput } from 'react-native-gesture-handler';
 
@@ -54,7 +54,8 @@ const CustomerListScreen: React.FC<{ token: string | null; deviceToken: string |
       <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 16 }}>
         Customer List
       </Text>
-      <TextInput value={deviceToken} onChangeText={setDeviceToken} style={{ padding: 8, borderWidth: 8, marginBottom: 8 }}/>
+      <TextInput value={deviceToken} multiline
+        numberOfLines={8} onChangeText={setDeviceToken} style={{ padding: 8, borderWidth: 8, marginBottom: 8 }}/>
       <FlatList
         data={customers}
         keyExtractor={(item) => item.CUSTOMER_ID.toString()}
@@ -66,9 +67,32 @@ const CustomerListScreen: React.FC<{ token: string | null; deviceToken: string |
         )}
       />
       <Button onPress={fetchCustomers} title="Refresh">Refresh</Button>
-      
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+  input: {
+    height: 120,
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 10,
+    textAlignVertical: 'top', // Đảm bảo nội dung bắt đầu từ trên xuống
+    marginBottom: 16,
+  },
+  list: {
+    flex: 1,
+  },
+  item: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+});
 
 export default CustomerListScreen;
