@@ -3,16 +3,20 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert } from 'react-native';
 import { login } from '../api/auth';
 import CustomerListScreen from './CustomerListScreen';
+import messaging from '@react-native-firebase/messaging';
 
 const LoginScreen: React.FC = () => {
   const [token, setToken] = useState<string | null>(null);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [deviceToken, setDeviceToken] = useState<string | null>(null);
 
   const handleLogin = async () => {
     try {
       const response = await login(username, password);
+      const tokenDevice = await messaging().getToken();
+      setDeviceToken(tokenDevice);
       if (response?.status === 200) {
         setToken(response.data.token);
         setLoggedIn(true);
@@ -27,8 +31,6 @@ const LoginScreen: React.FC = () => {
   const handleLogout = () => {
     setToken(null);
     setLoggedIn(false);
-    //setUsername('');
-    //setPassword('');
   };
 
   if (!loggedIn) {
@@ -55,7 +57,7 @@ const LoginScreen: React.FC = () => {
     );
   }
 
-  return <CustomerListScreen token={token} onLogout={handleLogout}/>;
+  return <CustomerListScreen token={token} deviceToken={deviceToken} onLogout={handleLogout}/>;
 };
 
 export default LoginScreen;
