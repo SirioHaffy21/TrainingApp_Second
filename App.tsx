@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Alert } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import AppNavigator from './src/navigation/AppNavigator'; // Thay thế cho navigator chính của bạn
 import './src/config/firebaseConfig';
@@ -30,12 +29,7 @@ const App: React.FC = () => {
       }
     );
 
-    const onMessage = messaging().onMessage(async (remoteMessage) => {
-      Alert.alert(
-        remoteMessage.notification?.title || 'Notification',
-        remoteMessage.notification?.body || ''
-      );
-    });
+    const onMessage = messaging().onMessage(async (remoteMessage) => remoteMessage);
 
     requestPermission();
     getToken();

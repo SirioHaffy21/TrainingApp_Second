@@ -33,12 +33,10 @@ const CustomerListScreen: React.FC<{ token: string | null; deviceToken: string |
           (customer: Customer, index: number, self: Customer[]) =>
             index === self.findIndex((c) => c.CUSTOMER_ID === customer.CUSTOMER_ID)
         );
-        //const uniqueCustomers = Array.from(new Map(response.data.customers.map((customer: Customer) => [customer.CUSTOMER_ID.toString(), customer])).values());
         setCustomers(uniqueCustomers);
       }
     } catch (error) {
       Alert.alert('Error fetching customers');
-      Alert.alert(error.toString());
     } finally {
       setLoading(false);
     }
@@ -55,7 +53,7 @@ const CustomerListScreen: React.FC<{ token: string | null; deviceToken: string |
         Customer List
       </Text>
       <TextInput value={deviceToken} multiline
-        numberOfLines={8} onChangeText={setDeviceToken} style={{ padding: 8, borderWidth: 8, marginBottom: 8 }}/>
+        numberOfLines={8} onChangeText={setDeviceToken} style={{ padding: 4, borderWidth: 4, marginBottom: 1 }}/>
       <FlatList
         data={customers}
         keyExtractor={(item) => item.CUSTOMER_ID.toString()}
